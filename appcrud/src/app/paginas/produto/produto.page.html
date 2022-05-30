@@ -1,9 +1,11 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>produto</ion-title>
+  <ion-toolbar color="success">
+    <ion-title>Página do Produto</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-list>
+    <ion-item *ngFor="let produto of produtos">{{produto.descricao}}</ion-item>
+  </ion-list>
 </ion-content>
