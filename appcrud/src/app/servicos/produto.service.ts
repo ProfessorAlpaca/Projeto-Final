@@ -19,4 +19,8 @@ export class ProdutoService {
   getAll(){
     return this.http.get<[Produto]>(this.url);
   }
+
+  remove(id: any){
+    return this.http.delete(this.url+'?id=' + id);
+  }
 }
