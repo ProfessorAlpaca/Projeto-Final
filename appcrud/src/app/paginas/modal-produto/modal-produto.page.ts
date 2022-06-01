@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+{import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { NgForm } from '@angular/forms';
+import { Produto, ProdutoService } from 'src/app/servicos/produto.service';
 
 @Component({
   selector: 'app-modal-produto',
@@ -7,9 +10,40 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModalProdutoPage implements OnInit {
 
-  constructor() { }
+  @Input() p: Produto;
+  atualizar = false;
+
+  dadosProduto= {
+    descricao: '',
+    valor: 0
+  };
+
+  constructor(private modalCtrl: ModalController, private service: ProdutoService) { }
 
   ngOnInit() {
+    if(this.p){
+    this.atualizar = true;
+    this.dadosProduto = this.p;
+    }
   }
+
+  fecharModal(){
+    this.modalCtrl.dismiss();
+  }
+
+  enviarFormulario(form: NgForm){
+    const produto = form.value;
+    if(this.atualizar){
+      this.service.update(produto, this.p.id).subscribe(resposta =>{
+        this.modalCtrl.dismiss(resposta);
+      });
+  }else{
+    this.service.create(produto).subscribe(resposta => {
+      this.modalCtrl.dismiss();
+    });
+  }
+}
+  
+}
 
 }
